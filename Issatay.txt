@@ -1,0 +1,35 @@
+Задание 2
+
+Напишите SQL запрос по базе данных из задания 1, который выведет список тех пользователей, 
+которые купили за период 1-15 августа 2 любых корма для животных, кроме "Корм Kitekat 
+для кошек, с кроликом в соусе, 85 г". Приложите его в текстовом документе. 
+
+
+SELECT *
+FROM products p
+JOIN orders o 
+ON p.product_id = o.warehouse_id
+WHERE o.order_date BETWEEN '2015-08-01' AND '2015-08-15'
+AND p.name != 'Корм Kitekat для кошек, с кроликом в соусе, 85 г';
+
+
+
+
+Задание 3
+
+Напишите SQL запрос, который выведет список топ 5 самых часто встречающихся товаров в заказах 
+пользователей в СПб за период 15-30 августа. Приложите его в том же текстовом документе,
+где вы написали запрос из предыдущего пункта. 
+
+
+
+SELECT p.product, COUNT(*) AS count
+FROM products p
+JOIN orders o 
+ON p.product_id = o.warehouse_id
+JOIN  warehouse w
+ON o.warehouse_id = w.warehouse_id
+WHERE w.city = 'Санкт-Петербург'
+AND o.order_date BETWEEN '2015-08-15' AND '2015-08-30'
+ORDER BY count DESC
+LIMIT 5;
